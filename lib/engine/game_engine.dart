@@ -71,6 +71,18 @@ class GameEngine with ChangeNotifier {
 
   void revealTile(int index) {
     _tiles[index] = _tiles[index].copyWith(revealed: true);
+    if (_tiles[index].isMine) {
+      for (var index = 0; index < _tiles.length; index++) {
+        _tiles[index] = _tiles[index].copyWith(revealed: true);
+      }
+    } else if (_tiles[index].adjacentMineCount == 0) {
+      final adjacentTileIndices = _getAdjacentTileIndices(index);
+      for (final adjacentTileIndex in adjacentTileIndices) {
+        if (!_tiles[adjacentTileIndex].revealed) {
+          revealTile(adjacentTileIndex);
+        }
+      }
+    }
     notifyListeners();
   }
 }
