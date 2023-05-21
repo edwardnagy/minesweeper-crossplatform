@@ -23,7 +23,12 @@ class TileBox extends StatelessWidget {
           color: color.withOpacity(0.25),
           shape: shape,
           child: Center(
-            child: tile.isMine ? const Icon(Icons.dangerous) : Text(tile.adjacentMineCount.toString()),
+            child: tile.isMine
+                ? const Icon(Icons.dangerous)
+                : Text(
+                    tile.adjacentMineCount.toString(),
+                    style: Theme.of(context).textTheme.labelLarge,
+                  ),
           ),
         ),
         if (!tile.revealed) ...[
