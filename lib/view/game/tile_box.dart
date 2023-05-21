@@ -24,10 +24,13 @@ class TileBox extends StatelessWidget {
           shape: shape,
           child: Center(
             child: tile.isMine
-                ? const Icon(Icons.dangerous)
+                ? const Icon(Icons.dangerous, color: Colors.red)
                 : Text(
-                    tile.adjacentMineCount.toString(),
-                    style: Theme.of(context).textTheme.labelLarge,
+                    tile.adjacentMineCount != 0 ? tile.adjacentMineCount.toString() : '',
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: _getTextColor(tile.adjacentMineCount),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
           ),
         ),
@@ -46,5 +49,16 @@ class TileBox extends StatelessWidget {
         ],
       ],
     );
+  }
+
+  Color _getTextColor(int adjacentMineCount) {
+    switch (adjacentMineCount) {
+      case 1:
+        return Colors.blue;
+      case 2:
+        return Colors.green;
+      default:
+        return Colors.red;
+    }
   }
 }
