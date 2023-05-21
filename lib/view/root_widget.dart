@@ -1,3 +1,4 @@
+import 'package:ea_minesweeper/model/game_configuration.dart';
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
@@ -16,7 +17,9 @@ class RootWidget extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const GameScreen(),
+      home: const GameScreen(
+        configuration: GameConfiguration(horizontalTileCount: 10, verticalTileCount: 15, mineRatio: 0.15),
+      ),
     );
   }
 }

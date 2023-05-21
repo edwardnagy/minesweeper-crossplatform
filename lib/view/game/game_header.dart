@@ -5,12 +5,12 @@ import '../../l10n/app_localizations.dart';
 class GameHeader extends StatelessWidget {
   const GameHeader({
     super.key,
-    required this.minesLeft,
+    required this.minesCount,
     required this.timeElapsed,
     required this.onPause,
   });
 
-  final int minesLeft;
+  final int minesCount;
   final Duration timeElapsed;
   final VoidCallback onPause;
 
@@ -25,25 +25,28 @@ class GameHeader extends StatelessWidget {
           Expanded(
             child: _statContainer(
               context,
-              icon: Icons.flag,
-              value: minesLeft.toString(),
-              tooltip: AppLocalizations.of(context).minesLeft(minesLeft),
+              label: AppLocalizations.of(context).mines,
+              value: minesCount.toString(),
             ),
           ),
           Padding(
             padding: const EdgeInsetsDirectional.symmetric(horizontal: padding),
-            child: IconButton(
-              onPressed: onPause,
-              icon: const Icon(Icons.pause),
-              tooltip: AppLocalizations.of(context).pauseGame,
+            child: Tooltip(
+              message: AppLocalizations.of(context).pause,
+              child: ElevatedButton(
+                onPressed: onPause,
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12.0),
+                  child: Icon(Icons.pause),
+                ),
+              ),
             ),
           ),
           Expanded(
             child: _statContainer(
               context,
-              icon: Icons.timer,
+              label: AppLocalizations.of(context).time,
               value: timeElapsed.inMinutesAndSeconds,
-              tooltip: AppLocalizations.of(context).timeElapsed(timeElapsed.inMinutesAndSeconds),
             ),
           ),
         ],
@@ -53,26 +56,23 @@ class GameHeader extends StatelessWidget {
 
   Widget _statContainer(
     BuildContext context, {
-    required IconData icon,
+    required String label,
     required String value,
-    required String tooltip,
   }) {
-    return Tooltip(
-      message: tooltip,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondaryContainer,
-          borderRadius: BorderRadiusDirectional.circular(8),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon),
-            const SizedBox(width: 6),
-            Text(value),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            value,
+            style: Theme.of(context).textTheme.displaySmall,
+          ),
+          Text(
+            label.toUpperCase(),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(letterSpacing: 4),
+          ),
+        ],
       ),
     );
   }

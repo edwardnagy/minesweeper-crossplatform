@@ -1,6 +1,6 @@
 {
     "title": "Minesweeper",
-    "pauseGame": "Pause game",
-    "minesLeft": "{mines, plural, =0{No mines} =1{1 mine} other{{mines} mines}} left",
-    "timeElapsed": "{time} time left"
+    "pause": "Pause",
+    "mines": "Mines",
+    "time": "Time"
 }
