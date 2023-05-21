@@ -27,14 +27,16 @@ class TileBox extends StatelessWidget {
           ),
         ),
         if (!tile.revealed) ...[
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              shadowColor: Colors.transparent,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(2)),
-              backgroundColor: color,
+          Positioned.fill(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shadowColor: Colors.transparent,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(2)),
+                backgroundColor: color,
+              ),
+              onPressed: onTap,
+              child: const SizedBox(),
             ),
-            onPressed: onTap,
-            child: const SizedBox(),
           ),
         ],
       ],
