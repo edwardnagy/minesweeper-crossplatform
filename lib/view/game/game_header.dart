@@ -27,6 +27,7 @@ class GameHeader extends StatelessWidget {
               context,
               icon: Icons.flag,
               value: minesLeft.toString(),
+              tooltip: AppLocalizations.of(context).minesLeft(minesLeft),
             ),
           ),
           Padding(
@@ -41,7 +42,8 @@ class GameHeader extends StatelessWidget {
             child: _statContainer(
               context,
               icon: Icons.timer,
-              value: timeElapsed.minutesAndSeconds,
+              value: timeElapsed.inMinutesAndSeconds,
+              tooltip: AppLocalizations.of(context).timeElapsed(timeElapsed.inMinutesAndSeconds),
             ),
           ),
         ],
@@ -49,27 +51,35 @@ class GameHeader extends StatelessWidget {
     );
   }
 
-  Widget _statContainer(BuildContext context, {required IconData icon, required String value}) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondaryContainer,
-        borderRadius: BorderRadiusDirectional.circular(8),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon),
-          const SizedBox(width: 6),
-          Text(value),
-        ],
+  Widget _statContainer(
+    BuildContext context, {
+    required IconData icon,
+    required String value,
+    required String tooltip,
+  }) {
+    return Tooltip(
+      message: tooltip,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          borderRadius: BorderRadiusDirectional.circular(8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon),
+            const SizedBox(width: 6),
+            Text(value),
+          ],
+        ),
       ),
     );
   }
 }
 
 extension on Duration {
-  String get minutesAndSeconds {
+  String get inMinutesAndSeconds {
     final minutes = inMinutes.toString().padLeft(2, '0');
     final seconds = (inSeconds % 60).toString().padLeft(2, '0');
     return '$minutes:$seconds';
