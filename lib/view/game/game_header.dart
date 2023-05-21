@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../engine/game_engine.dart';
 import '../../l10n/app_localizations.dart';
 
 class GameHeader extends StatelessWidget {
-  const GameHeader({
-    super.key,
-    required this.minesCount,
-    required this.timeElapsed,
-    required this.onPause,
-  });
+  const GameHeader(this._engine, {super.key});
 
-  final int minesCount;
-  final Duration timeElapsed;
-  final VoidCallback onPause;
+  final GameEngine _engine;
 
   @override
   Widget build(BuildContext context) {
@@ -20,36 +14,41 @@ class GameHeader extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsetsDirectional.all(padding),
-      child: Row(
-        children: [
-          Expanded(
-            child: _statContainer(
-              context,
-              label: AppLocalizations.of(context).mines,
-              value: minesCount.toString(),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: padding),
-            child: Tooltip(
-              message: AppLocalizations.of(context).pause,
-              child: ElevatedButton(
-                onPressed: onPause,
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12.0),
-                  child: Icon(Icons.pause),
+      child: AnimatedBuilder(
+        animation: _engine,
+        builder: (context, _) {
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: _statContainer(
+                  context,
+                  label: AppLocalizations.of(context).flags,
+                  value: _engine.flagsRemaining.toString(),
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            child: _statContainer(
-              context,
-              label: AppLocalizations.of(context).time,
-              value: timeElapsed.inMinutesAndSeconds,
-            ),
-          ),
-        ],
+              Padding(
+                padding: const EdgeInsetsDirectional.only(top: padding),
+                child: Tooltip(
+                  message: AppLocalizations.of(context).pause,
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      // TODO: Pause the game
+                    },
+                    child: const Icon(Icons.pause),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: _statContainer(
+                  context,
+                  label: AppLocalizations.of(context).time,
+                  value: const Duration(minutes: 10, seconds: 32).inMinutesAndSeconds,
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -71,6 +70,7 @@ class GameHeader extends StatelessWidget {
           Text(
             label.toUpperCase(),
             style: Theme.of(context).textTheme.bodySmall?.copyWith(letterSpacing: 4),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

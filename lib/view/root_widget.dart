@@ -1,7 +1,7 @@
-import 'package:ea_minesweeper/model/game_configuration.dart';
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
+import '../model/game_configuration.dart';
 import 'game/game_screen.dart';
 
 class RootWidget extends StatelessWidget {
@@ -18,7 +18,11 @@ class RootWidget extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const GameScreen(
-        configuration: GameConfiguration(horizontalTileCount: 10, verticalTileCount: 15, mineRatio: 0.15),
+        configuration: GameConfiguration(
+          horizontalTileCount: 10,
+          verticalTileCount: 15,
+          mineRatio: 0.15,
+        ),
       ),
     );
   }

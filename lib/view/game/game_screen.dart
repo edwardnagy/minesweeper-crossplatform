@@ -1,8 +1,8 @@
-import 'package:ea_minesweeper/engine/game_engine.dart';
-import 'package:ea_minesweeper/model/game_configuration.dart';
-import 'package:ea_minesweeper/view/game/game_body.dart';
 import 'package:flutter/material.dart';
 
+import '../../engine/game_engine.dart';
+import '../../model/game_configuration.dart';
+import 'game_body.dart';
 import 'game_header.dart';
 
 class GameScreen extends StatefulWidget {
@@ -29,13 +29,7 @@ class _GameScreenState extends State<GameScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          GameHeader(
-            minesCount: 10,
-            timeElapsed: const Duration(minutes: 10, seconds: 32),
-            onPause: () {
-              // TODO: Pause the game
-            },
-          ),
+          GameHeader(_engine),
           Expanded(
             child: GameBody(_engine),
           ),

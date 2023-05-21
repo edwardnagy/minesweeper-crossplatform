@@ -12,4 +12,6 @@ class GameConfiguration {
   int get tileCount => horizontalTileCount * verticalTileCount;
 
   int get mineCount => (tileCount * mineRatio).round();
+
+  int get flagCount => mineCount;
 }

@@ -1,6 +1,6 @@
-import 'package:ea_minesweeper/engine/game_engine.dart';
 import 'package:flutter/material.dart';
 
+import '../../engine/game_engine.dart';
 import 'tile_box.dart';
 
 class GameBody extends StatelessWidget {
@@ -27,8 +27,11 @@ class GameBody extends StatelessWidget {
           itemBuilder: (context, index) {
             return TileBox(
               tile: engine.tiles[index],
-              onTap: () {
+              onRevealed: () {
                 engine.revealTile(index);
+              },
+              onFlagged: () {
+                engine.toggleFlagForTile(index);
               },
             );
           },

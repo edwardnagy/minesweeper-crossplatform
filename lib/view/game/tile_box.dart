@@ -6,11 +6,13 @@ class TileBox extends StatelessWidget {
   const TileBox({
     super.key,
     required this.tile,
-    required this.onTap,
+    required this.onRevealed,
+    required this.onFlagged,
   });
 
   final Tile tile;
-  final VoidCallback onTap;
+  final VoidCallback onRevealed;
+  final VoidCallback onFlagged;
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +26,10 @@ class TileBox extends StatelessWidget {
           shape: shape,
           child: Center(
             child: tile.isMine
-                ? const Icon(Icons.dangerous, color: Colors.red)
-                : Text(
-                    tile.adjacentMineCount != 0 ? tile.adjacentMineCount.toString() : '',
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: _getTextColor(tile.adjacentMineCount),
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
+                ? _mine(context)
+                : tile.adjacentMineCount > 0
+                    ? _adjacentMineCountText(context)
+                    : null,
           ),
         ),
         if (!tile.revealed) ...[
@@ -41,9 +39,11 @@ class TileBox extends StatelessWidget {
                 shadowColor: Colors.transparent,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(2)),
                 backgroundColor: color,
+                padding: EdgeInsets.zero,
               ),
-              onPressed: onTap,
-              child: const SizedBox(),
+              onPressed: onRevealed,
+              onLongPress: onFlagged,
+              child: Center(child: tile.flagged ? _flag(context) : null),
             ),
           ),
         ],
@@ -51,14 +51,35 @@ class TileBox extends StatelessWidget {
     );
   }
 
-  Color _getTextColor(int adjacentMineCount) {
+  Widget _mine(BuildContext context) {
+    return const Icon(Icons.dangerous, color: Colors.red);
+  }
+
+  Widget _adjacentMineCountText(BuildContext context) {
+    final adjacentMineCount = tile.adjacentMineCount;
+    final Color color;
     switch (adjacentMineCount) {
       case 1:
-        return Colors.blue;
+        color = Colors.blue;
+        break;
       case 2:
-        return Colors.green;
+        color = Colors.green;
+        break;
       default:
-        return Colors.red;
+        color = Colors.red;
+        break;
     }
+
+    return Text(
+      adjacentMineCount.toString(),
+      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+            color: color,
+            fontWeight: FontWeight.bold,
+          ),
+    );
+  }
+
+  Widget _flag(BuildContext context) {
+    return const Icon(Icons.flag, color: Colors.red);
   }
 }

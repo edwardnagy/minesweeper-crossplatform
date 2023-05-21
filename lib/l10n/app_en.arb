@@ -1,6 +1,6 @@
 {
     "title": "Minesweeper",
     "pause": "Pause",
-    "mines": "Mines",
+    "flags": "Flags",
     "time": "Time"
 }

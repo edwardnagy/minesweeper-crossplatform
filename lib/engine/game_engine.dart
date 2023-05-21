@@ -19,6 +19,14 @@ class GameEngine with ChangeNotifier {
 
   List<Tile> get tiles => UnmodifiableListView(_tiles);
 
+  var _flagsUsed = 0;
+
+  int get flagsRemaining => configuration.flagCount - _flagsUsed;
+
+  bool get isGameOver => _tiles.any((tile) => tile.isMine && tile.revealed);
+
+  bool get isGameWon => _tiles.where((tile) => tile.isMine).every((tile) => tile.flagged);
+
   void _generateTiles() {
     _tiles = List.generate(
       configuration.tileCount,
@@ -70,12 +78,18 @@ class GameEngine with ChangeNotifier {
   }
 
   void revealTile(int index) {
+    if (_tiles[index].flagged) {
+      // Can't reveal a flagged tile
+      return;
+    }
     _tiles[index] = _tiles[index].copyWith(revealed: true);
     if (_tiles[index].isMine) {
+      // Game over, reveal all tiles
       for (var index = 0; index < _tiles.length; index++) {
         _tiles[index] = _tiles[index].copyWith(revealed: true);
       }
     } else if (_tiles[index].adjacentMineCount == 0) {
+      // Reveal adjacent tiles
       final adjacentTileIndices = _getAdjacentTileIndices(index);
       for (final adjacentTileIndex in adjacentTileIndices) {
         if (!_tiles[adjacentTileIndex].revealed) {
@@ -84,5 +98,21 @@ class GameEngine with ChangeNotifier {
       }
     }
     notifyListeners();
+  }
+
+  void toggleFlagForTile(int index) {
+    if (_tiles[index].revealed) {
+      // Can't flag a revealed tile
+      return;
+    }
+    if (_tiles[index].flagged) {
+      _tiles[index] = _tiles[index].copyWith(flagged: false);
+      _flagsUsed--;
+      notifyListeners();
+    } else if (_flagsUsed < configuration.flagCount) {
+      _tiles[index] = _tiles[index].copyWith(flagged: true);
+      _flagsUsed++;
+      notifyListeners();
+    }
   }
 }
