@@ -6,6 +6,14 @@
     "startGame": "Start Game",
     "pause": "Pause",
     "resume": "Resume",
+    "pausedDialogTitle": "Game Paused",
+    "pausedDialogContent": "Game is paused.",
+    "gameWonDialogTitle": "Game Won",
+    "gameWonDialogContent": "Congratulations! You won the game.",
+    "gameLostDialogTitle": "Game Lost",
+    "gameLostDialogContent": "You lost the game. Better luck next time!",
+    "startNewGame": "Start a new game",
+    "quit": "Quit",
     "flags": "Flags",
     "time": "Time"
 }

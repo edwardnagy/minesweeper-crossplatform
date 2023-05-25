@@ -23,7 +23,7 @@ class GameController with ChangeNotifier {
 
   int get flagsRemaining => configuration.flagCount - _flagsUsed;
 
-  bool get isGameOver => _tiles.any((tile) => tile.isMine && tile.revealed);
+  bool get isGameLost => _tiles.any((tile) => tile.isMine && tile.revealed);
 
   bool get isGameWon => _tiles.where((tile) => tile.isMine).every((tile) => tile.flagged);
 

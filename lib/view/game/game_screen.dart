@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../../controller/game_controller.dart';
 import '../../controller/time_controller.dart';
 import '../../model/game_configuration.dart';
+import '../game_dialog/end_game_dialog.dart';
+import '../game_dialog/pause_dialog.dart';
+import '../main_menu/main_menu_screen.dart';
 import 'game_body.dart';
 import 'game_header.dart';
 
@@ -36,10 +39,12 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void _gameStateListener() {
-    if (_gameController.isGameOver) {
+    if (_gameController.isGameLost) {
       _timeController.stop();
+      EndGameDialog.show(context, gameWon: false, onStartNewGame: _quit);
     } else if (_gameController.isGameWon) {
       _timeController.stop();
+      EndGameDialog.show(context, gameWon: true, onStartNewGame: _quit);
     } else {
       // If the game is not over or won, then it must be in progress.
       _timeController.start();
@@ -47,10 +52,23 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void _pause() {
+    PauseDialog.show(context, onQuit: _quit).then(
+      // resume the game when the dialog is closed
+      (_) => _resume(),
+    );
     _timeController.stop();
     setState(() {
       _isPaused = true;
     });
+  }
+
+  void _quit() {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (context) => const MainMenuScreen(),
+      ),
+      (_) => false,
+    );
   }
 
   void _resume() {
