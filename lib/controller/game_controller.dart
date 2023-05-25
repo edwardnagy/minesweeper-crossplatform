@@ -25,7 +25,10 @@ class GameController with ChangeNotifier {
 
   bool get isGameLost => _tiles.any((tile) => tile.isMine && tile.revealed);
 
-  bool get isGameWon => _tiles.where((tile) => tile.isMine).every((tile) => tile.flagged);
+  bool get isGameWon {
+    final mineTiles = _tiles.where((tile) => tile.isMine);
+    return mineTiles.isNotEmpty && mineTiles.every((tile) => tile.flagged);
+  }
 
   void _initializeTiles({required int initiallyRevealedIndex}) {
     _placeMines(excludedIndex: initiallyRevealedIndex);

@@ -3,8 +3,8 @@ import 'game_configuration.dart';
 enum GameDifficulty {
   easy(
     GameConfiguration(
-      horizontalTileCount: 8,
-      verticalTileCount: 8,
+      horizontalTileCount: 4,
+      verticalTileCount: 4,
       mineRatio: 0.15,
     ),
   ),
