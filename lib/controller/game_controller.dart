@@ -11,9 +11,9 @@ class GameController with ChangeNotifier {
 
   GameController(this.configuration) {
     _generateTiles();
-    _placeMines();
-    _computeAdjacentMineCounts();
   }
+
+  var _isInitialized = false;
 
   late List<Tile> _tiles;
 
@@ -27,6 +27,12 @@ class GameController with ChangeNotifier {
 
   bool get isGameWon => _tiles.where((tile) => tile.isMine).every((tile) => tile.flagged);
 
+  void _initializeTiles({required int initiallyRevealedIndex}) {
+    _placeMines(excludedIndex: initiallyRevealedIndex);
+    _computeAdjacentMineCounts();
+    _isInitialized = true;
+  }
+
   void _generateTiles() {
     _tiles = List.generate(
       configuration.tileCount,
@@ -34,11 +40,14 @@ class GameController with ChangeNotifier {
     );
   }
 
-  void _placeMines() {
+  void _placeMines({required int excludedIndex}) {
     final mineLocations = <int>{};
     final random = Random();
     while (mineLocations.length < configuration.mineCount) {
-      mineLocations.add(random.nextInt(configuration.tileCount));
+      final randomIndex = random.nextInt(configuration.tileCount);
+      if (randomIndex != excludedIndex) {
+        mineLocations.add(random.nextInt(configuration.tileCount));
+      }
     }
     for (final mineLocation in mineLocations) {
       _tiles[mineLocation] = _tiles[mineLocation].copyWith(isMine: true);
@@ -78,6 +87,9 @@ class GameController with ChangeNotifier {
   }
 
   void revealTile(int index) {
+    if (!_isInitialized) {
+      _initializeTiles(initiallyRevealedIndex: index);
+    }
     if (_tiles[index].flagged) {
       // Can't reveal a flagged tile
       return;
