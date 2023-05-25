@@ -3,22 +3,22 @@ import 'game_configuration.dart';
 enum GameDifficulty {
   easy(
     GameConfiguration(
-      horizontalTileCount: 10,
-      verticalTileCount: 15,
+      horizontalTileCount: 8,
+      verticalTileCount: 8,
       mineRatio: 0.15,
     ),
   ),
   medium(
     GameConfiguration(
-      horizontalTileCount: 15,
-      verticalTileCount: 20,
+      horizontalTileCount: 16,
+      verticalTileCount: 16,
       mineRatio: 0.15,
     ),
   ),
   hard(
     GameConfiguration(
-      horizontalTileCount: 20,
-      verticalTileCount: 25,
+      horizontalTileCount: 16,
+      verticalTileCount: 30,
       mineRatio: 0.15,
     ),
   );
