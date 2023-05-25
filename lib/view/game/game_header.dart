@@ -64,7 +64,7 @@ class GameHeader extends StatelessWidget {
     required String value,
   }) {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsetsDirectional.all(8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

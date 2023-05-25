@@ -25,7 +25,7 @@ class _GameBodyState extends State<GameBody> {
         return Scrollbar(
           controller: _scrollController,
           child: GridView.builder(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsetsDirectional.all(16),
             physics: const ClampingScrollPhysics(),
             controller: _scrollController,
             itemCount: widget.controller.tiles.length,

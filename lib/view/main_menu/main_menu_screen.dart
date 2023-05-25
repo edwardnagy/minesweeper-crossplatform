@@ -27,7 +27,12 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: const [LanguageSelector(), SizedBox(width: 16)],
+        actions: const [
+          Padding(
+            padding: EdgeInsetsDirectional.only(end: 16),
+            child: LanguageSelector(),
+          ),
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +55,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
           ],
           const Spacer(flex: 3),
           Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsetsDirectional.all(24.0),
             child: FloatingActionButton.extended(
               onPressed: () {
                 Navigator.of(context).push(

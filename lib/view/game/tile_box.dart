@@ -39,7 +39,7 @@ class TileBox extends StatelessWidget {
                 shadowColor: Colors.transparent,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(2)),
                 backgroundColor: color,
-                padding: EdgeInsets.zero,
+                padding: EdgeInsetsDirectional.zero,
               ),
               onPressed: onRevealed,
               onLongPress: onFlagged,
