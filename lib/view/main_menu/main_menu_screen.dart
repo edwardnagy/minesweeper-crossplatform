@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../l10n/app_localizations.dart';
 import '../../model/game_configuration.dart';
 import '../game/game_screen.dart';
+import 'language_selector.dart';
 
 /// Allows the user to select a game configuration (easy, medium or hard) and start a new game. Language selection is
 /// also available.
@@ -25,11 +26,14 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: const [LanguageSelector(), SizedBox(width: 16)],
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Spacer(flex: 3),
+          const Spacer(flex: 2),
           Text(
             AppLocalizations.of(context).title,
             textAlign: TextAlign.center,
@@ -44,7 +48,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
               onChanged: _changeDifficulty,
             ),
           ],
-          const Spacer(flex: 4),
+          const Spacer(flex: 3),
           Padding(
             padding: const EdgeInsets.all(24.0),
             child: FloatingActionButton.extended(

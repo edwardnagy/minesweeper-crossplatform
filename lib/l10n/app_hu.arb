@@ -1,0 +1,10 @@
+{
+    "title": "Minesweeper",
+    "easy": "Könnyű",
+    "medium": "Közepes",
+    "hard": "Nehéz",
+    "startGame": "Játék indítása",
+    "pause": "Szünet",
+    "flags": "Zászlók",
+    "time": "Idő"
+}
