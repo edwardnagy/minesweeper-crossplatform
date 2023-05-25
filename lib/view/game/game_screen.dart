@@ -26,14 +26,10 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          GameHeader(_controller),
-          Expanded(
-            child: GameBody(_controller),
-          ),
-        ],
+      appBar: GameHeader(_controller),
+      body: Padding(
+        padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).padding.bottom),
+        child: GameBody(_controller),
       ),
     );
   }

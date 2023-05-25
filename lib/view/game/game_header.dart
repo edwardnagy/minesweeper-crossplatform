@@ -3,53 +3,48 @@ import 'package:flutter/material.dart';
 import '../../controller/game_controller.dart';
 import '../../l10n/app_localizations.dart';
 
-class GameHeader extends StatelessWidget {
+class GameHeader extends StatelessWidget implements PreferredSizeWidget {
   const GameHeader(this.controller, {super.key});
 
   final GameController controller;
 
   @override
-  Widget build(BuildContext context) {
-    const padding = 8.0;
+  Size get preferredSize => const Size.fromHeight(92);
 
-    return Padding(
-      padding: const EdgeInsetsDirectional.all(padding),
-      child: AnimatedBuilder(
-        animation: controller,
-        builder: (context, _) {
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: _statContainer(
-                  context,
-                  label: AppLocalizations.of(context).flags,
-                  value: controller.flagsRemaining.toString(),
-                ),
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (context, _) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: _statContainer(
+                context,
+                label: AppLocalizations.of(context).flags,
+                value: controller.flagsRemaining.toString(),
               ),
-              Padding(
-                padding: const EdgeInsetsDirectional.only(top: padding),
-                child: Tooltip(
-                  message: AppLocalizations.of(context).pause,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      // TODO: Pause the game
-                    },
-                    child: const Icon(Icons.pause),
-                  ),
-                ),
+            ),
+            Tooltip(
+              message: AppLocalizations.of(context).pause,
+              child: FloatingActionButton(
+                onPressed: () {
+                  // TODO: Pause the game
+                },
+                child: const Icon(Icons.pause),
               ),
-              Expanded(
-                child: _statContainer(
-                  context,
-                  label: AppLocalizations.of(context).time,
-                  value: const Duration(minutes: 10, seconds: 32).inMinutesAndSeconds,
-                ),
+            ),
+            Expanded(
+              child: _statContainer(
+                context,
+                label: AppLocalizations.of(context).time,
+                value: const Duration(minutes: 10, seconds: 32).inMinutesAndSeconds,
               ),
-            ],
-          );
-        },
-      ),
+            ),
+          ],
+        );
+      },
     );
   }
 
