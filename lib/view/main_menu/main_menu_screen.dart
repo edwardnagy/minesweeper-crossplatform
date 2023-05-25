@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../l10n/app_localizations.dart';
-import '../../model/game_configuration.dart';
+import '../../model/game_difficulty.dart';
 import '../game/game_screen.dart';
 import 'language_selector.dart';
 
@@ -15,9 +15,9 @@ class MainMenuScreen extends StatefulWidget {
 }
 
 class _MainMenuScreenState extends State<MainMenuScreen> {
-  _GameDifficulty _selectedDifficulty = _GameDifficulty.medium;
+  GameDifficulty _selectedDifficulty = GameDifficulty.medium;
 
-  void _changeDifficulty(_GameDifficulty? difficulty) {
+  void _changeDifficulty(GameDifficulty? difficulty) {
     setState(() {
       _selectedDifficulty = difficulty!;
     });
@@ -40,8 +40,8 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
             style: Theme.of(context).textTheme.headlineLarge,
           ),
           const Expanded(child: SizedBox(height: 16)),
-          for (final difficulty in _GameDifficulty.values) ...[
-            RadioListTile<_GameDifficulty>(
+          for (final difficulty in GameDifficulty.values) ...[
+            RadioListTile<GameDifficulty>(
               title: Text(difficulty.label(context)),
               value: difficulty,
               groupValue: _selectedDifficulty,
@@ -72,40 +72,14 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
   }
 }
 
-enum _GameDifficulty {
-  easy(
-    GameConfiguration(
-      horizontalTileCount: 10,
-      verticalTileCount: 15,
-      mineRatio: 0.15,
-    ),
-  ),
-  medium(
-    GameConfiguration(
-      horizontalTileCount: 15,
-      verticalTileCount: 20,
-      mineRatio: 0.15,
-    ),
-  ),
-  hard(
-    GameConfiguration(
-      horizontalTileCount: 20,
-      verticalTileCount: 25,
-      mineRatio: 0.15,
-    ),
-  );
-
-  const _GameDifficulty(this.configuration);
-
-  final GameConfiguration configuration;
-
+extension on GameDifficulty {
   String label(BuildContext context) {
     switch (this) {
-      case _GameDifficulty.easy:
+      case GameDifficulty.easy:
         return AppLocalizations.of(context).easy;
-      case _GameDifficulty.medium:
+      case GameDifficulty.medium:
         return AppLocalizations.of(context).medium;
-      case _GameDifficulty.hard:
+      case GameDifficulty.hard:
         return AppLocalizations.of(context).hard;
     }
   }
