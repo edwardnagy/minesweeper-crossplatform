@@ -19,6 +19,8 @@ class _GameScreenState extends State<GameScreen> {
   late final GameController _gameController = GameController(widget.configuration);
   late final TimeController _timeController = TimeController(updateFrequency: const Duration(seconds: 1));
 
+  bool _isPaused = false;
+
   @override
   void initState() {
     super.initState();
@@ -39,18 +41,54 @@ class _GameScreenState extends State<GameScreen> {
     } else if (_gameController.isGameWon) {
       _timeController.stop();
     } else {
-      // If the game is neither over nor won, then it must be in progress.
+      // If the game is not over or won, then it must be in progress.
       _timeController.start();
     }
+  }
+
+  void _pause() {
+    _timeController.stop();
+    setState(() {
+      _isPaused = true;
+    });
+  }
+
+  void _resume() {
+    _timeController.start();
+    setState(() {
+      _isPaused = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GameHeader(_gameController, _timeController),
-      body: Padding(
-        padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).padding.bottom),
-        child: GameBody(_gameController),
+      body: SafeArea(
+        child: Column(
+          children: [
+            AnimatedBuilder(
+              animation: Listenable.merge([_gameController, _timeController]),
+              builder: (context, _) {
+                return GameHeader(
+                  flagsRemaining: _gameController.flagsRemaining,
+                  elapsedTime: _timeController.elapsed,
+                  paused: _isPaused,
+                  onPause: _pause,
+                  onResume: _resume,
+                );
+              },
+            ),
+            Expanded(
+              child: Opacity(
+                opacity: _isPaused ? 0.5 : 1.0,
+                child: IgnorePointer(
+                  ignoring: _isPaused,
+                  child: GameBody(_gameController),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -5,6 +5,7 @@
     "hard": "Hard",
     "startGame": "Start Game",
     "pause": "Pause",
+    "resume": "Resume",
     "flags": "Flags",
     "time": "Time"
 }

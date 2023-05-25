@@ -12,6 +12,8 @@ class TimeController with ChangeNotifier {
 
   Duration get elapsed => _stopwatch.elapsed;
 
+  bool get isRunning => _stopwatch.isRunning;
+
   void start() {
     _stopwatch.start();
     notifyListeners();

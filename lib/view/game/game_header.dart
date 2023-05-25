@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 
-import '../../controller/game_controller.dart';
-import '../../controller/time_controller.dart';
 import '../../l10n/app_localizations.dart';
 
-class GameHeader extends StatelessWidget implements PreferredSizeWidget {
-  const GameHeader(this._gameController, this._timeController, {super.key});
+class GameHeader extends StatelessWidget {
+  const GameHeader({
+    super.key,
+    required this.flagsRemaining,
+    required this.elapsedTime,
+    required this.paused,
+    required this.onPause,
+    required this.onResume,
+  });
 
-  final GameController _gameController;
-  final TimeController _timeController;
-
-  @override
-  Size get preferredSize => const Size.fromHeight(92);
+  final int flagsRemaining;
+  final Duration elapsedTime;
+  final bool paused;
+  final VoidCallback onPause;
+  final VoidCallback onResume;
 
   @override
   Widget build(BuildContext context) {
@@ -19,36 +24,34 @@ class GameHeader extends StatelessWidget implements PreferredSizeWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-          child: AnimatedBuilder(
-            animation: _gameController,
-            builder: (context, _) {
-              return _statContainer(
-                context,
-                label: AppLocalizations.of(context).flags,
-                value: _gameController.flagsRemaining.toString(),
-              );
-            },
+          child: _statContainer(
+            context,
+            label: AppLocalizations.of(context).flags,
+            value: flagsRemaining.toString(),
           ),
         ),
-        Tooltip(
-          message: AppLocalizations.of(context).pause,
-          child: FloatingActionButton(
-            onPressed: () {
-              // TODO: Pause the game
-            },
-            child: const Icon(Icons.pause),
+        if (paused) ...[
+          Tooltip(
+            message: AppLocalizations.of(context).resume,
+            child: FloatingActionButton(
+              onPressed: onResume,
+              child: const Icon(Icons.play_arrow_rounded),
+            ),
           ),
-        ),
+        ] else ...[
+          Tooltip(
+            message: AppLocalizations.of(context).pause,
+            child: FloatingActionButton(
+              onPressed: onPause,
+              child: const Icon(Icons.pause_rounded),
+            ),
+          ),
+        ],
         Expanded(
-          child: AnimatedBuilder(
-            animation: _timeController,
-            builder: (context, _) {
-              return _statContainer(
-                context,
-                label: AppLocalizations.of(context).time,
-                value: _timeController.elapsed.inMinutesAndSeconds,
-              );
-            },
+          child: _statContainer(
+            context,
+            label: AppLocalizations.of(context).time,
+            value: elapsedTime.inMinutesAndSeconds,
           ),
         ),
       ],
