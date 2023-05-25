@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../engine/game_engine.dart';
+import '../../controller/game_controller.dart';
 import '../../l10n/app_localizations.dart';
 
 class GameHeader extends StatelessWidget {
-  const GameHeader(this._engine, {super.key});
+  const GameHeader(this.controller, {super.key});
 
-  final GameEngine _engine;
+  final GameController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class GameHeader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsetsDirectional.all(padding),
       child: AnimatedBuilder(
-        animation: _engine,
+        animation: controller,
         builder: (context, _) {
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +24,7 @@ class GameHeader extends StatelessWidget {
                 child: _statContainer(
                   context,
                   label: AppLocalizations.of(context).flags,
-                  value: _engine.flagsRemaining.toString(),
+                  value: controller.flagsRemaining.toString(),
                 ),
               ),
               Padding(

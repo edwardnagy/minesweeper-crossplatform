@@ -6,10 +6,10 @@ import 'package:flutter/foundation.dart';
 import '../model/game_configuration.dart';
 import '../model/tile.dart';
 
-class GameEngine with ChangeNotifier {
+class GameController with ChangeNotifier {
   final GameConfiguration configuration;
 
-  GameEngine(this.configuration) {
+  GameController(this.configuration) {
     _generateTiles();
     _placeMines();
     _computeAdjacentMineCounts();

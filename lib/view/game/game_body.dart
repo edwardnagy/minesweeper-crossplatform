@@ -1,37 +1,37 @@
 import 'package:flutter/material.dart';
 
-import '../../engine/game_engine.dart';
+import '../../controller/game_controller.dart';
 import 'tile_box.dart';
 
 class GameBody extends StatelessWidget {
-  const GameBody(this.engine, {super.key});
+  const GameBody(this.controller, {super.key});
 
-  final GameEngine engine;
+  final GameController controller;
 
   @override
   Widget build(BuildContext context) {
     const gridSpacing = 2.0;
 
     return AnimatedBuilder(
-      animation: engine,
+      animation: controller,
       builder: (context, _) {
         return GridView.builder(
           padding: const EdgeInsets.all(8),
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: engine.tiles.length,
+          itemCount: controller.tiles.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: engine.configuration.horizontalTileCount,
+            crossAxisCount: controller.configuration.horizontalTileCount,
             crossAxisSpacing: gridSpacing,
             mainAxisSpacing: gridSpacing,
           ),
           itemBuilder: (context, index) {
             return TileBox(
-              tile: engine.tiles[index],
+              tile: controller.tiles[index],
               onRevealed: () {
-                engine.revealTile(index);
+                controller.revealTile(index);
               },
               onFlagged: () {
-                engine.toggleFlagForTile(index);
+                controller.toggleFlagForTile(index);
               },
             );
           },

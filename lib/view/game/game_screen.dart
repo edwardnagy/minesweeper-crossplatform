@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../engine/game_engine.dart';
+import '../../controller/game_controller.dart';
 import '../../model/game_configuration.dart';
 import 'game_body.dart';
 import 'game_header.dart';
@@ -15,11 +15,11 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  late final GameEngine _engine = GameEngine(widget.configuration);
+  late final GameController _controller = GameController(widget.configuration);
 
   @override
   void dispose() {
-    _engine.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -29,9 +29,9 @@ class _GameScreenState extends State<GameScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          GameHeader(_engine),
+          GameHeader(_controller),
           Expanded(
-            child: GameBody(_engine),
+            child: GameBody(_controller),
           ),
         ],
       ),
