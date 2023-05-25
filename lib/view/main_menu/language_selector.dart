@@ -12,7 +12,7 @@ class LanguageSelector extends StatelessWidget {
       animation: AppLocalizationProvider.instance,
       builder: (context, _) {
         const locales = AppLocalizations.supportedLocales;
-        final currentLocale = AppLocalizationProvider.instance.locale;
+        final currentLocale = Localizations.localeOf(context);
         final setLocale = AppLocalizationProvider.instance.setLocale;
 
         return Row(
