@@ -1,5 +1,9 @@
 {
     "title": "Minesweeper",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "startGame": "Start Game",
     "pause": "Pause",
     "flags": "Flags",
     "time": "Time"
