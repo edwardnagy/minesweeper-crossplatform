@@ -1,0 +1,19 @@
+{
+    "title": "كانسة الألغام",
+    "easy": "سهل",
+    "medium": "متوسط",
+    "hard": "معقد",
+    "startGame": "بدء اللعبة",
+    "pause": "توقف",
+    "resume": "استئناف",
+    "pausedDialogTitle": "اللعبة متوقفة مؤقتا",
+    "pausedDialogContent": "توقفت اللعبة.",
+    "gameWonDialogTitle": "تم الفوز باللعبة",
+    "gameWonDialogContent": "تهانينا لقد فزت.",
+    "gameLostDialogTitle": "انتهت اللعبة",
+    "gameLostDialogContent": "لقد خسرت حظ اوفر في المرة القادمة",
+    "startNewGame": "ابدأ لعبة جديدة",
+    "quit": "خروج",
+    "flags": "اعلام",
+    "time": "الوقت"
+}
