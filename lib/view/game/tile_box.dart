@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/tile.dart';
@@ -34,16 +35,24 @@ class TileBox extends StatelessWidget {
         ),
         if (!tile.revealed) ...[
           Positioned.fill(
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shadowColor: Colors.transparent,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(2)),
-                backgroundColor: color,
-                padding: EdgeInsetsDirectional.zero,
+            child: Listener(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shadowColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(2)),
+                  backgroundColor: color,
+                  padding: EdgeInsetsDirectional.zero,
+                ),
+                onPressed: onRevealed,
+                onLongPress: onFlagged,
+                child: Center(child: tile.flagged ? _flag(context) : null),
               ),
-              onPressed: onRevealed,
-              onLongPress: onFlagged,
-              child: Center(child: tile.flagged ? _flag(context) : null),
+              onPointerDown: (event) async {
+                // Check if right mouse button clicked
+                if (event.kind == PointerDeviceKind.mouse && event.buttons == kSecondaryMouseButton) {
+                  onFlagged();
+                }
+              },
             ),
           ),
         ],
